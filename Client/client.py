@@ -1,6 +1,8 @@
 # Proximity Occupation Sensor
 # Remote Client
 #
+# Version 1.8
+#
 # By Daniel Osmond 13197963
 #
 # 4/08/18
