@@ -1,6 +1,7 @@
 #installer package for Proximity Occupation Sensor
 #Daniel Osmond 13197963
 # 7/08/18
+#Installer Version 1.0
 
 #aws iot sdk for python
 pip install AWSIoTPythonSDK
