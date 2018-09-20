@@ -1,6 +1,7 @@
 #startup script for Proximity Occupation Sensor - Main Server
 # Daniel Osmond
 # 7/08/18
+# Version 1.2
 
 #User Configurable Variables
 $endpoint = "ak3vkd3cgbh1r.iot.us-east-1.amazonaws.com"
