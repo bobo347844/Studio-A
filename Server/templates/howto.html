@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+
+<head>
+    <!--Make the site pretty-->
+    <title>Help | AWOS</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{  url_for('static', filename='seatingsite.css')}}">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-inverse">
+        <div class="continer-fluid">
+            <div class = "navbar-header">
+                <a class="navbar-brand" href="index">AWOS</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index">Home</a></li>
+                <li><a href="seating">Seating</a></li>
+                <li><a href="about">About</a></li>
+                <li class="active"><a href="howto">Help</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!--Main Body-->
+    <div id="div80">
+        <h2>How to Use the AWOS Website</h2>
+        <br>
+        <p>
+            The occupancy status of seating throughout Building 11 is given in the "<a href="seating">seating</a>" page of this website. There occupancy information relating to each seat is given. The information is given as three columns <strong>Location</strong>, <strong>Occupied</strong>, <strong>Date</strong>. The information in these main categories can be sorted by clicking on their respective headings.
+            <br>
+            <ul>
+                <li><strong>Location</strong> is both the name and location of the desk given in UTS Style<br>CB11 - Building Number<br>XX - Floor Number<br>XXX - Desk/Room Number</li>
+                <li><strong>Occupied</strong> is the occupancy status of the desk. <strong>False</strong> indicates the desk is unoccupied, whereas <strong>True</strong> indicates the desk is occupied and unable to be used.</li>
+                <li><strong>Date</strong> is the last time at which the seat status was updated, ideally this should be within the past 5-10 minutes, however in the event of a system issue, this time may be increased.</li>
+                <li><strong>Page Last Updated</strong> is the time at which this page was last loaded by you (the user)'s computer. The site will automatically update every 5 minutes, however this does not necessarily mean that there has been any change to the occupancy status of any of the desks, just that your system has the most recent information available.</li>
+            </ul>
+        </p>
+    </div>
+</body>
+</html>

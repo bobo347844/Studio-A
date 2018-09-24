@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html>
+
+
+<head>
+    <!-- Keep The site looking pretty -->
+    <title>About | AWOS</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{  url_for('static', filename='seatingsite.css')}}">
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-inverse">
+        <div class="continer-fluid">
+            <div class = "navbar-header">
+                <a class="navbar-brand" href="index">AWOS</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index">Home</a></li>
+                <li><a href="seating">Seating</a></li>
+                <li class="active"><a href="about">About</a></li>
+                <li><a href="howto">Help</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    <!-- Main Body-->
+    <div id="div80">
+        <h2>About the AWOS Site</h2>
+        <p>
+            This website was built for Fundamental Studio A Task 05: A Proximity Sensor to be used in determining workstation occupancy 1.
+            <br>
+            This website runs on:
+            <br>
+            <strong>Flask</strong> - <a href="http://flask.pocoo.org">Get Flask</a>
+            <br>
+            <strong>Jinja</strong> - <a href="http://jinja.pocoo.org">Get Jinja</a>
+            <br>
+            <strong>Bootstrap</strong> - <a href="https://getbootstrap.com">Get Bootstrap</a>
+            <br>
+            <strong>jQuery</strong> - <a href="http://jquery.com/download/">Get jQuery</a>
+            <br>
+            <strong>JavaScript</strong> - <a href="https://www.ecma-international.org/memento/tc39.htm">ECMAScript Standard</a>
+            <br>
+            These Technologies are used in this project for education/research non-commercial works.
+        </p>
+        <br>
+        <p>
+            This website was built by 13197963@student.uts.edu.au
+        </p>
+        
+        <p>
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><br>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+        </p>
+    </div>
+</body>
+</html>
