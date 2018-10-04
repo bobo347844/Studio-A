@@ -1,9 +1,10 @@
+#!/usr/bin/env/python2.7
 # Proximity Occupation Sensor
 # Main Server
-# Version 1.4
+# Version 1.5
 # By Daniel Osmond 13197963
 #
-# 5/08/18
+# 5/10/18
 #
 # This python script is written for a host server to be able to connect to MQTT and download information from the remote clients, then display that information in a html webpage
 #
@@ -241,7 +242,7 @@ def main():
         #allows the user to delete the database
         elif(userInput =="purgedb"):
             #doublecheck that they actually want this
-            userInput = (input("This will delete the current database, are you sure (y/n)? "))
+            userInput = (raw_input("This will delete the current database, are you sure (y/n)? "))
             #nuke database, commit changes, recreate, commit changes
             if(userInput=="y"):
                 cursor.execute('''DROP TABLE seating''')
@@ -270,7 +271,7 @@ def main():
 
 
         #get user input
-        userInput = (input("Enter a command> ")).lower()
+        userInput = (raw_input("Enter a command> ")).lower()
 
 
     #user has input quit
