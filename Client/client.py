@@ -2,7 +2,7 @@
 # Proximity Occupation Sensor
 # Remote Client
 #
-# Version 1.9
+# Version 1.10
 #
 # By Daniel Osmond 13197963
 #
@@ -123,6 +123,11 @@ def seatMSG():
     #location and occupancy status
     location = seatLocation
     status = currentlyOccupied
+    if status:
+        status = "True"
+    else:
+        status = "False"
+        
     #current datetime in local time
     date = time.asctime(time.localtime())
     #convert variables to a seat type object
