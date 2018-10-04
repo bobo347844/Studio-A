@@ -1,15 +1,16 @@
+#!/usr/bin/env/python2.7
 # Proximity Occupation Sensor
 # Remote Client
 #
-# Version 1.8
+# Version 1.9
 #
 # By Daniel Osmond 13197963
 #
-# 4/08/18
+# 5/10/18
 #
 # This python script is written to allow for a remote client to collect sensor data and sent it via MQTT to a broker for onward transmission
 #
-# TODO: integrate with sensor data, write launch script
+# 
 #
 
 #Libraries
