@@ -1,7 +1,8 @@
 # Proximity Occupation Sensor
 # Remote Client
 #
-# By Daniel Osmond 13197963
+# Server by Daniel Osmond 13197963
+# Object Detection by Adam van Zuylen 12895571
 #
 # 4/08/18
 #
