@@ -1,22 +1,25 @@
-#!/usr/bin/env/python2.7
 # Proximity Occupation Sensor
 # Remote Client
 #
-# Version 1.10
-#
 # By Daniel Osmond 13197963
 #
-# 5/10/18
+# 4/08/18
 #
 # This python script is written to allow for a remote client to collect sensor data and sent it via MQTT to a broker for onward transmission
 #
-# 
 #
 
 #Libraries
 
 #AWS MQTT IoT SDK
 import AWSIoTPythonSDK.MQTTLib as AWSIoTPyMQTT
+
+# import openCV and related packages
+import cv2
+import numpy as np
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+import time
 
 #time libraries
 import time
@@ -41,6 +44,22 @@ pendingShutdown = False
 currentlyOccupied = False
 #is there a change to the occupancy that the server needs to be made aware of
 pendingOccupancyChange = True
+
+#Declare and set variables for object detection
+index = -1
+thickness = 4
+color = (255, 0, 255)
+minObjectSize = 150
+
+# initialise camera and reference to raw camera capture
+camera = PiCamera()
+camera.resolution = (1920, 1088)
+camera.framerate = 1
+rawCapture = PiRGBArray(camera)
+print("Camera Warming Up")
+imageNumber = 1
+
+
 
 #Class Definitions
 
@@ -119,14 +138,16 @@ def dataRX(client, userdata, message):
 ###########################################################################
 
 def seatMSG():
+    
 
     #location and occupancy status
     location = seatLocation
     status = currentlyOccupied
     if status:
-        status = "True"
+        status = "Occupied"
     else:
-        status = "False"
+        status = "Unoccupied"
+        
         
     #current datetime in local time
     date = time.asctime(time.localtime())
@@ -227,9 +248,52 @@ if debug:
 print("[NOTICE] Started Successfully")
 #main loop runs while program not told to shutdown by remote client
 while not pendingShutdown:
-    #
-    #GET SENSOR DATA
-    #
+    # capture frame from camera
+    camera.capture(rawCapture, format="bgr", use_video_port=True)
+    print("Image Captured")
+    #Reset number of detected objects
+    numContours = 0
+    print('Processing Image...')
+    time_last = time.time()
+    image = rawCapture.array            
+    blur = cv2.GaussianBlur(image, (131,131), 0)
+                                                                                                                                                                                                                                                                    
+    gray = cv2.cvtColor(blur, cv2.COLOR_BGR2GRAY)
+    thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 3)
+    _, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    for c in contours:
+        area = cv2.contourArea(c)
+        #Check if large object
+        if area > minObjectSize:
+            cv2.drawContours(image, [c], -1, color, 3)
+            numContours += 1
+            #Find and plot center of object
+            M = cv2.moments(c)
+            cx = int( M['m10']/M['m00'])
+            cy = int( M['m01']/M['m00'])
+            cv2.circle(image, (cx,cy), 4, (0,0,255), -1)
+          
+    timeTaken = round(time.time()-time_last, 4)
+
+    cv2.putText(image, '{}'.format(timeTaken), (100,100), 0, 2.5, (0,255,0), 2, cv2.LINE_AA)
+    #Save image file for debugging purposes
+    cv2.imwrite('/home/pi/Desktop/frame%s.jpeg' % imageNumber, image)
+    print("Number of Objects found:", numContours)
+    print('Frame took {} seconds'.format(timeTaken))
+    #If objects are found, let the server know!
+    if numContours > 1:
+        currentlyOccupied = True
+        pendingOccupancyChange = True
+    else:
+        currentlyOccupied = False
+        pendingOccupancyChange = True
+            
+    # clear the stream in preparation for the next frame
+    rawCapture.truncate(0)
+    imageNumber+=1
+    
+
     print("Command status")
     print(pendingCommand)
     print("update status")
