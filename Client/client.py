@@ -4,7 +4,7 @@
 # Server by Daniel Osmond 13197963
 # Object Detection by Adam van Zuylen 12895571
 #
-# 4/08/18
+# 20/10/18
 #
 # This python script is written to allow for a remote client to collect sensor data and sent it via MQTT to a broker for onward transmission
 #
@@ -57,7 +57,8 @@ camera = PiCamera()
 camera.resolution = (1920, 1088)
 camera.framerate = 1
 rawCapture = PiRGBArray(camera)
-print("Camera Warming Up")
+if debug:
+    print("[NOTICE] Camera Warming Up")
 imageNumber = 1
 
 
@@ -144,6 +145,7 @@ def seatMSG():
     #location and occupancy status
     location = seatLocation
     status = currentlyOccupied
+    #send as string, otherwise the str bool gets converted to int bool
     if status:
         status = "Occupied"
     else:
@@ -251,10 +253,11 @@ print("[NOTICE] Started Successfully")
 while not pendingShutdown:
     # capture frame from camera
     camera.capture(rawCapture, format="bgr", use_video_port=True)
-    print("Image Captured")
+    print("[NOTICE] Image Captured")
     #Reset number of detected objects
     numContours = 0
-    print('Processing Image...')
+    if debug:
+        print('Processing Image...')
     time_last = time.time()
     image = rawCapture.array            
     blur = cv2.GaussianBlur(image, (131,131), 0)
@@ -280,8 +283,9 @@ while not pendingShutdown:
     cv2.putText(image, '{}'.format(timeTaken), (100,100), 0, 2.5, (0,255,0), 2, cv2.LINE_AA)
     #Save image file for debugging purposes
     cv2.imwrite('/home/pi/Desktop/frame%s.jpeg' % imageNumber, image)
-    print("Number of Objects found:", numContours)
-    print('Frame took {} seconds'.format(timeTaken))
+    if debug:
+        print("Number of Objects found:", numContours)
+        print('Frame took {} seconds'.format(timeTaken))
     #If objects are found, let the server know!
     if numContours > 1:
         currentlyOccupied = True
@@ -294,11 +298,12 @@ while not pendingShutdown:
     rawCapture.truncate(0)
     imageNumber+=1
     
-
-    print("Command status")
-    print(pendingCommand)
-    print("update status")
-    print(pendingUpdate)
+    if debug:
+        print("Command status")
+        print(pendingCommand)
+        print("update status")
+        print(pendingUpdate)
+    
     #if there is a pending update or command, execute command
     if(pendingOccupancyChange or pendingCommand):
         if(pendingShutdown):
